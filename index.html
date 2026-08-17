@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VORTEX — Automatic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,480;0,9..144,600;1,9..144,420&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-mark">VORTEX</div>
+  <ul class="nav-links">
+    <li>Movement</li>
+    <li>Details</li>
+    <li>Reserve</li>
+  </ul>
+</nav>
+
+<!-- BEZEL SCROLL PROGRESS (signature element) -->
+<div class="bezel" id="bezel">
+  <svg viewBox="0 0 100 100" id="bezelSvg"></svg>
+  <div class="bezel-label" id="bezelLabel">00</div>
+</div>
+
+<!-- SCRUB HERO -->
+<div class="scrub-track" id="scrubTrack">
+  <div class="scrub-stage">
+    <canvas id="scrubCanvas"></canvas>
+    <div class="scrub-vignette"></div>
+
+    <div class="hero-copy" id="copy1" style="opacity:1;">
+      <span class="eyebrow">Vortex · Automatic</span>
+      <h1 class="display">A quiet<br>mechanism.</h1>
+      <p>Hand-finished in matte gunmetal, cased around a self-winding movement built to run for generations, not seasons.</p>
+    </div>
+
+    <div class="hero-copy right" id="copy2" style="opacity:0;">
+      <span class="eyebrow">Caliber V72</span>
+      <h1 class="display">Every gear,<br>on purpose.</h1>
+      <p>Twenty-two jewels. A gold-toned bridge train, visible through the case back — nothing hidden, nothing decorative.</p>
+    </div>
+
+    <div class="hero-copy" id="copy3" style="opacity:0;">
+      <span class="eyebrow">Sapphire Crystal</span>
+      <h1 class="display">Time,<br>uninterrupted.</h1>
+      <p>Domed and anti-reflective, so the only thing between you and the dial is a little air.</p>
+    </div>
+
+    <div class="hero-copy right" id="copy4" style="opacity:0;">
+      <span class="eyebrow">Vortex Automatic</span>
+      <h1 class="display display" style="font-style:italic;">Time, blurred<br>into motion.</h1>
+      <p>Wind it once. Wear it for the next thirty years.</p>
+    </div>
+
+    <div class="scroll-cue" id="scrollCue">
+      <span>Scroll</span>
+      <div class="line"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MOVEMENT / SPECS -->
+<section class="movement">
+  <div class="section-head reveal">
+    <span class="eyebrow">01 — The Movement</span>
+    <h2 class="display">What's actually<br>inside the case.</h2>
+    <p class="lede">No smart features, no charging cradle. Just a wound spring, a gear train, and roughly four hundred parts working in agreement.</p>
+  </div>
+
+  <div class="spec-grid reveal">
+    <div class="spec-cell">
+      <span class="k">Caliber</span>
+      <span class="v">V72</span>
+    </div>
+    <div class="spec-cell">
+      <span class="k">Power Reserve</span>
+      <span class="v">42<span>hrs</span></span>
+    </div>
+    <div class="spec-cell">
+      <span class="k">Jewels</span>
+      <span class="v">22</span>
+    </div>
+    <div class="spec-cell">
+      <span class="k">Beat Rate</span>
+      <span class="v">28,800<span>vph</span></span>
+    </div>
+    <div class="spec-cell">
+      <span class="k">Case Diameter</span>
+      <span class="v">39<span>mm</span></span>
+    </div>
+    <div class="spec-cell">
+      <span class="k">Case Material</span>
+      <span class="v">Gunmetal PVD</span>
+    </div>
+    <div class="spec-cell">
+      <span class="k">Water Resistance</span>
+      <span class="v">50<span>m</span></span>
+    </div>
+    <div class="spec-cell">
+      <span class="k">Strap</span>
+      <span class="v">Black Leather</span>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILS GALLERY -->
+<section class="details">
+  <div class="section-head reveal">
+    <span class="eyebrow">02 — Details</span>
+    <h2 class="display">Built to be<br>looked at closely.</h2>
+    <p class="lede">Most of a watch is invisible on the wrist. We spent the extra time on the parts you'll only notice up close.</p>
+  </div>
+
+  <div class="gallery reveal" id="gallery">
+    <div class="gallery-item tall" data-frame="55">
+      <img alt="Exploded gear train of the Vortex movement">
+      <div class="cap"><span>Gear Train</span><span>Fig. 01</span></div>
+    </div>
+    <div class="gallery-item" data-frame="40">
+      <img alt="Skeleton case back showing gold bridges">
+      <div class="cap"><span>Case Back</span><span>Fig. 02</span></div>
+    </div>
+    <div class="gallery-item" data-frame="70">
+      <img alt="Domed sapphire crystal reassembling over the dial">
+      <div class="cap"><span>Sapphire Crystal</span><span>Fig. 03</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto-wrap">
+  <div class="manifesto reveal">
+    <p class="display">"A good watch doesn't ask for your attention. It just keeps <em>quiet, honest time</em> — long after the thing that reminded you to buy it is forgotten."</p>
+    <p class="attr">— The Vortex Design Notes</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner reveal">
+    <div>
+      <span class="eyebrow">03 — Reserve</span>
+      <h2 class="display">Own the<br>mechanism.</h2>
+      <a href="#" class="btn">Reserve yours →</a>
+    </div>
+    <div class="cta-price">
+      <div class="amt">$640</div>
+      <div class="sub">Ships in 2–3 weeks · Lifetime movement service</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Vortex Watch Co.</span>
+  <span>Caliber V72 · Est. Concept</span>
+</footer>
+
+<script src="frames_data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
