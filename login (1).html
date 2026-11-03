@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · MY-WATCH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,480;9..144,600&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="auth.css">
+</head>
+<body>
+<div class="split">
+  <section class="stage">
+    <div class="brand">MY-WATCH</div>
+    <svg class="watch" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="96" fill="#b8934b"/>
+      <circle cx="100" cy="100" r="90" fill="#14120e"/>
+      <circle cx="100" cy="100" r="82" fill="#0a0906"/>
+      <g id="ticks" stroke="#ece4d3"></g>
+      <text x="100" y="62" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="2" fill="#b8934b">MY-WATCH</text>
+      <line id="hh" x1="100" y1="100" x2="100" y2="58" stroke="#ece4d3" stroke-width="4.5" stroke-linecap="round"/>
+      <line id="mh" x1="100" y1="100" x2="100" y2="38" stroke="#ece4d3" stroke-width="3" stroke-linecap="round"/>
+      <line id="sh" x1="100" y1="112" x2="100" y2="30" stroke="#e0bd7a" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="100" cy="100" r="4" fill="#e0bd7a"/>
+    </svg>
+    <div>
+      <span class="eyebrow">Members</span>
+      <h1>Time well kept.</h1>
+      <p>Sign in to manage your orders and saved watches.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="card">
+      <span class="eyebrow">Sign in</span>
+      <h2>Welcome back</h2>
+      <p class="sub">Choose how you’re signing in.</p>
+
+      <div class="roles" role="tablist" aria-label="Account type">
+        <button type="button" role="tab" aria-selected="true" data-role="user">User</button>
+        <button type="button" role="tab" aria-selected="false" data-role="admin">Admin</button>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" autocomplete="current-password" required>
+          <button type="button" class="peek" id="peek" aria-label="Show password">Show</button>
+        </div>
+        <label class="row" style="text-transform:none;letter-spacing:0;font:inherit"><input type="checkbox" id="remember"> Keep me signed in for 7 days</label>
+        <div class="msg" id="msg" role="alert" aria-live="polite"></div>
+        <button class="btn" type="submit" id="submit">Sign in as User</button>
+      </form>
+
+      <a class="back" href="index.html">← Back to the watch</a>
+
+      <div class="hint">
+        Demo — User: <b>user</b> / <b>User@123</b> · Admin: <b>admin</b> / <b>Admin@123</b><br>
+        Delete this box and change the accounts in <b>auth.js</b> before going live.
+      </div>
+    </div>
+  </section>
+</div>
+<script src="auth.js"></script>
+</body>
+</html>
