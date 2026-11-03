@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MY-WATCH | Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.85)),
+                url("https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=2000&q=80");
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .login-container {
+            width: 390px;
+            max-width: 92%;
+            padding: 35px;
+            background: rgba(15, 15, 15, 0.88);
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.6);
+            backdrop-filter: blur(15px);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            font-size: 34px;
+            letter-spacing: 4px;
+        }
+
+        .logo span {
+            color: #ff1744;
+        }
+
+        .logo p {
+            color: #aaa;
+            margin-top: 7px;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            background: #222;
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            width: 50%;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            color: #aaa;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .tab.active {
+            background: #ff1744;
+            color: white;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 9px;
+            border: 1px solid #444;
+            outline: none;
+            background: #171717;
+            color: white;
+            font-size: 15px;
+            transition: .3s;
+        }
+
+        .input-group input:focus {
+            border-color: #ff1744;
+            box-shadow: 0 0 10px rgba(255,23,68,.25);
+        }
+
+        .password-box {
+            position: relative;
+        }
+
+        .password-box input {
+            padding-right: 50px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #aaa;
+            user-select: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 9px;
+            background: #ff1744;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .login-btn:hover {
+            background: #e60032;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,23,68,.3);
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 18px;
+            min-height: 20px;
+            font-size: 14px;
+        }
+
+        .error {
+            color: #ff5252;
+        }
+
+        .success {
+            color: #00e676;
+        }
+
+        .demo {
+            margin-top: 25px;
+            padding: 12px;
+            background: #1d1d1d;
+            border-radius: 9px;
+            color: #aaa;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .demo strong {
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 22px;
+            color: #777;
+            font-size: 12px;
+        }
+
+        @media(max-width: 450px) {
+            .login-container {
+                padding: 25px;
+            }
+
+            .logo h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="logo">
+        <h1>MY<span>-WATCH</span></h1>
+        <p>Watch. Enjoy. Discover.</p>
+    </div>
+
+    <!-- USER / ADMIN TABS -->
+    <div class="tabs">
+        <button class="tab active" id="userTab" onclick="selectRole('user')">
+            USER
+        </button>
+
+        <button class="tab" id="adminTab" onclick="selectRole('admin')">
+            ADMIN
+        </button>
+    </div>
+
+    <form id="loginForm">
+
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+                required
+                autocomplete="username"
+            >
+        </div>
+
+        <div class="input-group">
+            <label for="password">Password</label>
+
+            <div class="password-box">
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    required
+                    autocomplete="current-password"
+                >
+
+                <span
+                    class="show-password"
+                    onclick="togglePassword()"
+                    id="eye"
+                >👁</span>
+            </div>
+        </div>
+
+        <button type="submit" class="login-btn">
+            LOGIN
+        </button>
+
+        <div class="message" id="message"></div>
+
+    </form>
+
+    <!-- DEMO LOGIN DETAILS -->
+    <div class="demo">
+        <strong>Demo Accounts</strong><br><br>
+
+        User:<br>
+        Username: <strong>user</strong><br>
+        Password: <strong>1234</strong>
+
+        <br><br>
+
+        Admin:<br>
+        Username: <strong>admin</strong><br>
+        Password: <strong>admin123</strong>
+    </div>
+
+    <div class="footer">
+        © 2026 MY-WATCH
+    </div>
+
+</div>
+
+
+<script>
+
+    // Current selected role
+    let selectedRole = "user";
+
+
+    // Select USER or ADMIN
+    function selectRole(role) {
+
+        selectedRole = role;
+
+        const userTab = document.getElementById("userTab");
+        const adminTab = document.getElementById("adminTab");
+
+        if (role === "user") {
+
+            userTab.classList.add("active");
+            adminTab.classList.remove("active");
+
+        } else {
+
+            adminTab.classList.add("active");
+            userTab.classList.remove("active");
+
+        }
+
+        document.getElementById("message").textContent = "";
+
+    }
+
+
+    // Show / Hide password
+    function togglePassword() {
+
+        const password = document.getElementById("password");
+        const eye = document.getElementById("eye");
+
+        if (password.type === "password") {
+
+            password.type = "text";
+            eye.textContent = "🙈";
+
+        } else {
+
+            password.type = "password";
+            eye.textContent = "👁";
+
+        }
+
+    }
+
+
+    // Login
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+        const username =
+            document.getElementById("username").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        const message =
+            document.getElementById("message");
+
+
+        // ADMIN LOGIN
+        if (
+            selectedRole === "admin" &&
+            username === "admin" &&
+            password === "admin123"
+        ) {
+
+            message.textContent = "Admin login successful!";
+            message.className = "message success";
+
+            // Save login
+            localStorage.setItem("mywatchLoggedIn", "true");
+            localStorage.setItem("mywatchRole", "admin");
+
+            setTimeout(() => {
+
+                window.location.href = "admin.html";
+
+            }, 1000);
+
+            return;
+        }
+
+
+        // USER LOGIN
+        if (
+            selectedRole === "user" &&
+            username === "user" &&
+            password === "1234"
+        ) {
+
+            message.textContent = "User login successful!";
+            message.className = "message success";
+
+            // Save login
+            localStorage.setItem("mywatchLoggedIn", "true");
+            localStorage.setItem("mywatchRole", "user");
+
+            setTimeout(() => {
+
+                window.location.href = "index.html";
+
+            }, 1000);
+
+            return;
+        }
+
+
+        // Wrong login
+        message.textContent =
+            "Invalid username or password.";
+
+        message.className = "message error";
+
+    });
+
+</script>
+
+</body>
+</html>

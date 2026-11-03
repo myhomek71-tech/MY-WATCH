@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MY-WATCH | Admin</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0d0d0d;
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 20px 30px;
+            background: #151515;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        header h1 {
+            color: #ff1744;
+        }
+
+        .logout {
+            border: none;
+            background: #ff1744;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        main {
+            padding: 40px;
+        }
+
+        .welcome {
+            background: #181818;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #181818;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #292929;
+        }
+
+        .card h2 {
+            color: #ff1744;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>MY-WATCH ADMIN</h1>
+
+    <button class="logout" onclick="logout()">
+        Logout
+    </button>
+
+</header>
+
+
+<main>
+
+    <div class="welcome">
+        <h2>Welcome, Admin 👋</h2>
+        <p>Manage your MY-WATCH website from here.</p>
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>🎬 Movies</h2>
+            <p>Manage movies and content.</p>
+        </div>
+
+        <div class="card">
+            <h2>👥 Users</h2>
+            <p>Manage website users.</p>
+        </div>
+
+        <div class="card">
+            <h2>📊 Dashboard</h2>
+            <p>View website statistics.</p>
+        </div>
+
+        <div class="card">
+            <h2>⚙️ Settings</h2>
+            <p>Manage website settings.</p>
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    // Protect admin page
+    const loggedIn =
+        localStorage.getItem("mywatchLoggedIn");
+
+    const role =
+        localStorage.getItem("mywatchRole");
+
+    if (loggedIn !== "true" || role !== "admin") {
+
+        window.location.href = "login.html";
+
+    }
+
+
+    // Logout
+    function logout() {
+
+        localStorage.removeItem("mywatchLoggedIn");
+        localStorage.removeItem("mywatchRole");
+
+        window.location.href = "login.html";
+
+    }
+
+</script>
+
+</body>
+
+</html>
