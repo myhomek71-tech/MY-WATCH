@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · MY-WATCH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dial:#14213d; --dial-2:#1d2f55; --silver:#c9d1d9; --paper:#f5f7fa;
+  --brass:#b08d57; --ink:#0f1a2e; --error:#b3261e; --ok:#1f7a4d;
+  --serif:"Bodoni Moda",Georgia,serif; --sans:"Instrument Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.5}
+.hidden{display:none!important}
+
+/* ---------- Login layout ---------- */
+.split{display:grid;grid-template-columns:1.05fr 1fr;min-height:100%}
+.stage{background:radial-gradient(circle at 30% 20%,var(--dial-2),var(--dial) 70%);
+  color:var(--paper);display:flex;flex-direction:column;justify-content:space-between;padding:40px 48px}
+.brand{font-family:var(--serif);font-size:1.4rem;letter-spacing:.04em}
+.watch{align-self:center;width:min(360px,70vw);aspect-ratio:1}
+.watch svg{width:100%;height:100%;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+.stage p{max-width:34ch;color:var(--silver);font-size:.95rem}
+.stage h1{font-family:var(--serif);font-weight:500;font-size:2rem;line-height:1.15;margin-bottom:8px}
+
+.panel{display:flex;align-items:center;justify-content:center;padding:32px}
+.card{width:100%;max-width:400px}
+.card h2{font-family:var(--serif);font-size:1.9rem;margin-bottom:4px}
+.sub{color:#51607a;margin-bottom:24px}
+
+.roles{display:grid;grid-template-columns:1fr 1fr;background:#e4e9f0;border-radius:10px;padding:4px;margin-bottom:22px}
+.roles button{border:0;background:transparent;padding:10px;border-radius:7px;font:600 .95rem var(--sans);color:#51607a;cursor:pointer}
+.roles button[aria-selected="true"]{background:#fff;color:var(--dial);box-shadow:0 1px 3px rgba(15,26,46,.2)}
+
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
+.field{margin-bottom:16px;position:relative}
+input[type=text],input[type=password]{width:100%;padding:12px 14px;border:1.5px solid #b9c3d3;border-radius:8px;
+  font:inherit;background:#fff;color:var(--ink)}
+input:focus-visible,button:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.peek{position:absolute;right:8px;top:30px;border:0;background:none;color:var(--dial);font:600 .8rem var(--sans);
+  padding:6px 8px;cursor:pointer}
+.row{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:.9rem}
+.row label{display:flex;gap:8px;align-items:center;margin:0;font-weight:500}
+.btn{width:100%;padding:13px;border:0;border-radius:8px;background:var(--dial);color:#fff;font:600 1rem var(--sans);cursor:pointer}
+.btn:hover{background:var(--dial-2)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.msg{min-height:1.4em;margin-bottom:12px;font-size:.9rem;color:var(--error)}
+.hint{margin-top:22px;padding:12px 14px;border-left:3px solid var(--brass);background:#fff;font-size:.85rem;color:#51607a}
+
+/* ---------- Dashboard ---------- */
+.dash{min-height:100%;display:flex;flex-direction:column}
+.bar{background:var(--dial);color:var(--paper);display:flex;justify-content:space-between;align-items:center;padding:16px 32px}
+.bar .tag{font-size:.8rem;background:var(--brass);color:#fff;padding:3px 10px;border-radius:999px;margin-left:10px;font-weight:600}
+.bar button{background:transparent;border:1.5px solid var(--silver);color:var(--paper);padding:8px 16px;border-radius:8px;font:600 .9rem var(--sans);cursor:pointer}
+.bar button:hover{background:rgba(255,255,255,.1)}
+main{padding:36px 32px;max-width:960px;width:100%;margin:0 auto}
+main h2{font-family:var(--serif);font-size:1.8rem;margin-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:24px 0}
+.tile{background:#fff;border:1px solid #d5dce8;border-radius:10px;padding:18px}
+.tile b{display:block;font-size:1.6rem;font-family:var(--serif)}
+.tile span{color:#51607a;font-size:.9rem}
+.table-wrap{overflow-x:auto;background:#fff;border:1px solid #d5dce8;border-radius:10px}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid #e4e9f0}
+th{background:#eef2f7}
+
+@media (max-width:820px){
+  .split{grid-template-columns:1fr}
+  .stage{padding:24px;gap:16px}
+  .watch{width:200px}
+  .stage p{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div class="split" id="loginView">
+  <section class="stage" aria-hidden="false">
+    <div class="brand">MY-WATCH</div>
+    <div class="watch" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="96" fill="#b08d57"/>
+        <circle cx="100" cy="100" r="90" fill="#0f1a2e"/>
+        <circle cx="100" cy="100" r="82" fill="#f5f7fa"/>
+        <g id="ticks" stroke="#14213d"></g>
+        <text x="100" y="62" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="2" fill="#14213d">MY-WATCH</text>
+        <line id="hh" x1="100" y1="100" x2="100" y2="58" stroke="#14213d" stroke-width="4.5" stroke-linecap="round"/>
+        <line id="mh" x1="100" y1="100" x2="100" y2="38" stroke="#14213d" stroke-width="3" stroke-linecap="round"/>
+        <line id="sh" x1="100" y1="112" x2="100" y2="30" stroke="#b08d57" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="100" cy="100" r="4" fill="#b08d57"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Time well kept.</h1>
+      <p>Sign in to manage your orders and saved watches.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="card">
+      <h2>Welcome back</h2>
+      <p class="sub">Choose how you’re signing in.</p>
+
+      <div class="roles" role="tablist" aria-label="Account type">
+        <button type="button" role="tab" id="tabUser" aria-selected="true" data-role="user">User</button>
+        <button type="button" role="tab" id="tabAdmin" aria-selected="false" data-role="admin">Admin</button>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" autocomplete="current-password" required>
+          <button type="button" class="peek" id="peek" aria-label="Show password">Show</button>
+        </div>
+        <div class="row">
+          <label><input type="checkbox" id="remember"> Keep me signed in</label>
+        </div>
+        <div class="msg" id="msg" role="alert" aria-live="polite"></div>
+        <button class="btn" type="submit" id="submit">Sign in as User</button>
+      </form>
+
+      <div class="hint">
+        Demo accounts — User: <b>user</b> / <b>User@123</b> · Admin: <b>admin</b> / <b>Admin@123</b>.
+        Remove this box and change these before going live.
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div class="dash hidden" id="dashView">
+  <header class="bar">
+    <div><strong class="brand">MY-WATCH</strong><span class="tag" id="roleTag"></span></div>
+    <button type="button" id="logout">Sign out</button>
+  </header>
+  <main id="dashMain"></main>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  // Accounts. Passwords are stored as SHA-256 hashes of "mywatch:<username>:<password>".
+  // To add an account, compute the hash (see README note) and add an entry here.
+  const ACCOUNTS = {
+    admin: { role:'admin', name:'Administrator', hash:'d16d5494910eca1523ee182c31431fc569fa3780eb1e078d4b2429db14535111' },
+    user:  { role:'user',  name:'Watch Fan',     hash:'965bbcb8161c2bf16ee419bf66fd12c4a802118d6b1e11d1a5a511ba26e258c9' }
+  };
+  const SESSION_KEY = 'mywatch_session';
+  const MAX_TRIES = 5, LOCK_MS = 30000;
+
+  const $ = id => document.getElementById(id);
+  let role = 'user', tries = 0, lockedUntil = 0;
+
+  // ---- Watch face ----
+  const ticks = $('ticks');
+  for (let i = 0; i < 60; i++) {
+    const major = i % 5 === 0, a = i * 6 * Math.PI / 180;
+    const r1 = major ? 70 : 75, r2 = 80;
+    const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    l.setAttribute('x1', 100 + r1 * Math.sin(a)); l.setAttribute('y1', 100 - r1 * Math.cos(a));
+    l.setAttribute('x2', 100 + r2 * Math.sin(a)); l.setAttribute('y2', 100 - r2 * Math.cos(a));
+    l.setAttribute('stroke-width', major ? 2.5 : 1);
+    ticks.appendChild(l);
+  }
+  function tick() {
+    const d = new Date(), s = d.getSeconds(), m = d.getMinutes() + s / 60, h = (d.getHours() % 12) + m / 60;
+    $('sh').setAttribute('transform', `rotate(${s * 6} 100 100)`);
+    $('mh').setAttribute('transform', `rotate(${m * 6} 100 100)`);
+    $('hh').setAttribute('transform', `rotate(${h * 30} 100 100)`);
+  }
+  tick(); setInterval(tick, 1000);
+
+  // ---- Helpers ----
+  async function sha256(text) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function saveSession(s, persist) {
+    try { (persist ? localStorage : sessionStorage).setItem(SESSION_KEY, JSON.stringify(s)); } catch (e) {}
+  }
+  function loadSession() {
+    for (const store of [sessionStorage, localStorage]) {
+      try {
+        const s = JSON.parse(store.getItem(SESSION_KEY) || 'null');
+        if (s && s.exp > Date.now() && ACCOUNTS[s.username]) return s;
+      } catch (e) {}
+    }
+    return null;
+  }
+  function clearSession() {
+    try { sessionStorage.removeItem(SESSION_KEY); localStorage.removeItem(SESSION_KEY); } catch (e) {}
+  }
+
+  // ---- Role tabs ----
+  document.querySelectorAll('.roles button').forEach(btn => btn.addEventListener('click', () => {
+    role = btn.dataset.role;
+    document.querySelectorAll('.roles button').forEach(b => b.setAttribute('aria-selected', b === btn));
+    $('submit').textContent = 'Sign in as ' + (role === 'admin' ? 'Admin' : 'User');
+    $('msg').textContent = '';
+  }));
+
+  $('peek').addEventListener('click', () => {
+    const p = $('password'), show = p.type === 'password';
+    p.type = show ? 'text' : 'password';
+    $('peek').textContent = show ? 'Hide' : 'Show';
+    $('peek').setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+  });
+
+  // ---- Login ----
+  $('loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const msg = $('msg'), btn = $('submit');
+    const username = $('username').value.trim().toLowerCase(), password = $('password').value;
+
+    if (Date.now() < lockedUntil) {
+      msg.textContent = `Too many attempts. Try again in ${Math.ceil((lockedUntil - Date.now()) / 1000)} seconds.`;
+      return;
+    }
+    if (!username || !password) { msg.textContent = 'Enter your username and password.'; return; }
+
+    btn.disabled = true;
+    const account = ACCOUNTS[username];
+    const hash = await sha256(`mywatch:${username}:${password}`);
+    btn.disabled = false;
+
+    if (!account || account.hash !== hash) {
+      tries++;
+      if (tries >= MAX_TRIES) { lockedUntil = Date.now() + LOCK_MS; tries = 0; msg.textContent = 'Too many failed attempts. Locked for 30 seconds.'; }
+      else msg.textContent = 'Username or password is incorrect.';
+      return;
+    }
+    if (account.role !== role) {
+      msg.textContent = account.role === 'admin'
+        ? 'This is an admin account. Select the Admin tab to sign in.'
+        : 'This account does not have admin access. Select the User tab.';
+      return;
+    }
+
+    tries = 0; msg.textContent = '';
+    const remember = $('remember').checked;
+    const session = { username, role: account.role, exp: Date.now() + (remember ? 7 * 864e5 : 2 * 36e5) };
+    saveSession(session, remember);
+    $('password').value = '';
+    showDashboard(session);
+  });
+
+  // ---- Dashboard ----
+  function showDashboard(s) {
+    const a = ACCOUNTS[s.username];
+    $('loginView').classList.add('hidden');
+    $('dashView').classList.remove('hidden');
+    $('roleTag').textContent = s.role === 'admin' ? 'Admin' : 'User';
+    document.title = (s.role === 'admin' ? 'Admin' : 'My account') + ' · MY-WATCH';
+
+    if (s.role === 'admin') {
+      const rows = Object.entries(ACCOUNTS).map(([u, x]) =>
+        `<tr><td>${esc(u)}</td><td>${esc(x.name)}</td><td>${esc(x.role)}</td></tr>`).join('');
+      $('dashMain').innerHTML = `
+        <h2>Admin dashboard</h2>
+        <p class="sub">Signed in as ${esc(a.name)}.</p>
+        <div class="grid">
+          <div class="tile"><b>${Object.keys(ACCOUNTS).length}</b><span>Registered accounts</span></div>
+          <div class="tile"><b>—</b><span>Products (connect your data)</span></div>
+          <div class="tile"><b>—</b><span>Open orders (connect your data)</span></div>
+        </div>
+        <h3 style="margin-bottom:10px">Accounts</h3>
+        <div class="table-wrap"><table><thead><tr><th>Username</th><th>Name</th><th>Role</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    } else {
+      $('dashMain').innerHTML = `
+        <h2>Hello, ${esc(a.name)}</h2>
+        <p class="sub">Your account at MY-WATCH.</p>
+        <div class="grid">
+          <div class="tile"><b>0</b><span>Orders placed</span></div>
+          <div class="tile"><b>0</b><span>Saved watches</span></div>
+          <div class="tile"><b>User</b><span>Account type</span></div>
+        </div>
+        <p><a href="https://myhomek71-tech.github.io/MY-WATCH/">Browse the collection</a></p>`;
+    }
+  }
+
+  $('logout').addEventListener('click', () => {
+    clearSession();
+    $('dashView').classList.add('hidden');
+    $('loginView').classList.remove('hidden');
+    document.title = 'Sign in · MY-WATCH';
+    $('username').focus();
+  });
+
+  // Restore an existing session on load
+  const existing = loadSession();
+  if (existing) showDashboard(existing);
+})();
+</script>
+</body>
+</html>
